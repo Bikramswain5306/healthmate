@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reschedule Appointment - HealthMate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #f39c12;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px 10px 0;
+        }
+        button:hover {
+            background-color: #e67e22;
+        }
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background-color: #3498db;
+        }
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+        #confirmation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            color: #155724;
+        }
+        #error {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            color: #721c24;
+        }
+        #appointmentDetails {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 4px;
+        }
+        .appointment-info h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .appointment-info p {
+            margin: 8px 0;
+        }
+        .current-appointment {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .current-appointment strong {
+            color: #856404;
+        }
+        #timeSlots {
+            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .time-slot {
+            padding: 8px 16px;
+            border: 2px solid #f39c12;
+            border-radius: 4px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+        .time-slot:hover {
+            background-color: #fef5e7;
+        }
+        .time-slot.selected {
+            background-color: #f39c12;
+            color: white;
+        }
+        .loading {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Reschedule Appointment</h2>
+        
+        <a href="index.html">← Book Appointment</a>
+        <a href="cancel.html">Cancel Appointment</a>
+        <a href="doctor-dashboard.html">Doctor Dashboard</a>
+        
+        <input type="number" id="apptId" placeholder="Enter Appointment ID" min="1">
+        <button class="btn-secondary" onclick="loadLastAppointmentId()" style="font-size: 12px; padding: 6px 12px;">Use Last Booked ID</button>
+        <button class="btn-secondary" onclick="lookupAppointmentForReschedule()">Lookup Appointment</button>
+        
+        <div id="appointmentDetails"></div>
+        
+        <div id="rescheduleSection" style="display: none;">
+            <h3 style="margin-top: 20px; color: #2c3e50;">Select New Date and Time</h3>
+            
+            <input type="date" id="newDate" required><br>
+            
+            <div id="timeSlots"></div>
+            <div id="timeStatus" class="loading"></div>
+            <input type="hidden" id="newTime" required>
+            
+            <button id="rescheduleBtn" onclick="rescheduleAppointment()">Reschedule Appointment</button>
+        </div>
+        
+        <div id="confirmation"></div>
+        <div id="error"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
